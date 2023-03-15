@@ -20,6 +20,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/habibati')
 .then(() => console.log('MongoDB: Successfull connection completed'))
 .catch((err) => console.log('MongoDB: Error occured', err));
 
+const Brand = require('./models/Brand');
+const Product = require('./models/Product');
+const Review = require('./models/Review');
+
 // $$$ View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -38,8 +42,9 @@ app.use((req, res, next) => {
 
 // ----- Routing 
 
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', async (req, res) => {
+    const brands = await Brand.find({});
+    res.render('index', {brands});
 });
 
 app.listen(3000, () => {

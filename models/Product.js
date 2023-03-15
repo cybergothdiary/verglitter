@@ -15,6 +15,7 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
     itemType: String,
     name: String,
+    imageUrl: String,
     color: String,
     itemForm: String,
     finishType: String,

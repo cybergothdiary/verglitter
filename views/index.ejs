@@ -3,7 +3,23 @@
 <header>
     <%- include('./partials/navbar') %>
     <video class="mx-auto video-bg" preload="true" autoplay="true" muted loop>
-        <div class="blur-bg">Hello</div>
         <source src="/assets/HABIBATI.mp4" type="video/mp4">
     </video>
 </header>
+<div class="brands-section container py-5">
+    <!-- <h6>Presented brands: <%= brands.length %></h6> -->
+    <div class="d-flex justify-content-between flex-wrap mt-3">
+        <% for (let brand of brands) { %>
+            <div class="brand-block text-center">
+                <div class="brand-pic">
+                    <a href="/brands/<%= brand.name %>">
+                        <img src="<%= brand.imageUrl %>" alt="«<%= brand.name %>» logotype">
+                    </a>
+                </div>
+                <div class="brand-name">
+                    <a class="d-block" href="/brands/<%= brand.name %>"><%= brand.name %></a>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</div>
