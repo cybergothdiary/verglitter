@@ -1,0 +1,66 @@
+<%- layout('./layout/boilerplate') %>
+
+<header>
+    <%- include('../partials/navbar') %>
+</header>
+<div class="add-section py-3">
+    <div class="container">
+        <a href="/brands/<%= brand.short %>" class="product-back d-block text-center">&#8593; Back to <%= brand.name %></a>
+        <form class="col-6 mx-auto bs-validation" action="/brands/<%= brand.short %>" method="post" novalidate>
+            <div class="form-group">
+                <label class="label-required" for="name">Name:</label>
+                <input type="text" class="form-control" id="name" name="product[name]" placeholder="Enter a name of your product" required>
+                <small id="emailHelp" class="form-text text-muted">Use only official & approved names.</small>
+                <div class="invalid-feedback">Name is required</div>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="itemType">Item type:</label>
+                <select class="d-block pr-3" id="itemType" name="product[itemType]">
+                    <option value="Eyeliner">Eyeliner</option>
+                    <option value="Pomade">Pomade</option>
+                    <option value="Cream">Cream</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="skinType">Skin type:</label>
+                <select class="d-block pr-2" id="skinType" name="product[skinType]">
+                    <option value="All">All types</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Sensitive">Sensitive</option>
+                    <option value="Combinated">Combinated</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="color">Color:</label>
+                <input type="text" class="form-control" id="color" name="product[color]" placeholder="Pick a color" required>
+                <div class="invalid-feedback">Color is required</div>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="image">Item picture:</label>
+                <input type="text" class="form-control" id="image" name="product[imageUrl]" placeholder="Provide a URL" required>
+                <div class="invalid-feedback">Picture is required</div>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="finishType">Finish type:</label>
+                <input type="text" class="form-control" id="finishType" name="product[finishType]" placeholder="Describe a finish type" required>
+                <div class="invalid-feedback">Finish type is required</div>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="volume">Item volume or weight:</label>
+                <input type="text" class="form-control" id="volume" name="product[volume]" placeholder="Milliliters or grams" required>
+                <div class="invalid-feedback">Volume is required</div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="product[description]" rows="2" placeholder="What <%= brand.name %> tells about this product?"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="label-required" for="ingredients">Ingredients:</label>
+                <textarea class="form-control" id="ingredients" name="product[ingredients]" rows="5" required></textarea>
+                <small id="emailHelp" class="form-text text-muted">Separate ingredients with a comma (,)</small>
+                <div class="invalid-feedback">Ingredients were not provided</div>
+            </div>
+            <button class="btn btn-primary">Add to catalog</button>
+        </form>
+    </div>
+</div>

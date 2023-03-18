@@ -1,5 +1,5 @@
 // H A B I B A T I | 
-// Multifunctional & exclusive platform, disposing the most iconic and worshipped cosmetics reviews.
+// Multifunctional & exclusive platform, disposing info as well as reviews of the most iconic and worshipped cosmetics.
 
 // https://99designs.com/profiles/1875373/designs/1513751
 
@@ -10,12 +10,19 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const path = require('path');
-const joi = require('joi');
 
-// $$$ Express Application Initialization
+// $$$ Joi Validation
+const Joi = require('joi');
+const { productSchema } = require('./utils/joiSchemas');
+const { validateProduct } = require('./utils/validators');
+
+// $$$ Error Classes & Catch
+const catchAsync = require('./utils/catchAsync');
+
+// $$$ Express App Initialization
 const app = express();
 
-// $$$ Mongoose Connecting
+// $$$ MongoDB Connecting
 mongoose.connect('mongodb://127.0.0.1:27017/habibati')
 .then(() => console.log('MongoDB: Successfull connection completed'))
 .catch((err) => console.log('MongoDB: Error occured', err));
@@ -40,12 +47,52 @@ app.use((req, res, next) => {
     next();
 })
 
-// ----- Routing 
+// ***** Routing 
 
-app.get('/', async (req, res) => {
+app.get(['/', '/brands'], async (req, res) => {
     const brands = await Brand.find({});
     res.render('index', {brands});
 });
+
+app.get('/brands/:shortName', async (req, res) => {
+    const isPresented = await Brand.findOne({short: req.params.shortName});
+    if (isPresented) {
+        res.render('brand', {brand: isPresented, pageTitle: isPresented.name});
+    } else {
+        res.redirect('/');
+    }
+});
+
+app.get('/brands/:shortName/add', async (req, res) => {
+    const isPresented = await Brand.findOne({short: req.params.shortName});
+    if (isPresented) {
+        res.render('products/add', {brand: isPresented});
+    } else {
+        res.redirect('/');
+    }
+});
+
+app.post('/brands/:shortName', catchAsync(async (req, res) => {
+    const product = new Product(req.body.product);
+    const brand = await Brand.findOne({short: req.params.shortName});
+    brand.products.push(product);
+    product.brand = brand;
+    await brand.save();
+    await product.save();
+    res.redirect('/'); // Should redirect to just created product page
+}));
+
+app.get('/brands/:shortName/:productId', async (req, res) => {
+    res.send(`${req.params.shortName} has some products for you!`);
+});
+
+app.all('*', (req, res, next) => {
+    res.send('Sorry, 404: Not Found!')
+})
+
+app.use((err, req, res, next) => {
+    console.log('Async error was just detected!', err);
+})
 
 app.listen(3000, () => {
     console.log('HABIBATI APP: Server is running on // localhost //')
