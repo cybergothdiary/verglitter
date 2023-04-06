@@ -1,0 +1,77 @@
+<%- layout('./layout/boilerplate') %>
+
+<header>
+    <%- include('../partials/navbar') %>
+</header>
+<div class="add-section py-3">
+    <div class="container">
+        <a href="/brands/<%= product.brand.short %>/<%= product._id %>" class="product-back d-block text-center">&#8593; <%= product.name %></a>
+
+        <div class="col-6 mx-auto">
+            <form class="bs-validation" action="/brands/<%= product.brand.short %>/<%= product._id %>?_method=PUT" method="post" novalidate>
+                <div class="form-group">
+                    <label class="label-required" for="name">Name:</label>
+                    <input type="text" class="form-control" value="<%= product.name %>" id="name" name="product[name]" placeholder="Enter a name of your product" required>
+                    <small id="emailHelp" class="form-text text-muted">Use only official & approved names.</small>
+                    <div class="invalid-feedback">Name is required</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="itemType">Item type:</label>
+                    <select class="d-block pr-3" id="itemType" name="product[itemType]">
+                        <option <%= product.itemType === 'Eyeliner' ? 'selected' : null %> value="Eyeliner">Eyeliner</option>
+                        <option <%= product.itemType === 'Pomade' ? 'selected' : null %> value="Pomade">Pomade</option>
+                        <option <%= product.itemType === 'Cream' ? 'selected' : null %> value="Cream">Cream</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="skinType">Skin type:</label>
+                    <select class="d-block pr-2" id="skinType" name="product[skinType]">
+                        <option <%= product.skinType === 'All' ? 'selected' : null %> value="All">All types</option>
+                        <option <%= product.skinType === 'Normal' ? 'selected' : null %> value="Normal">Normal</option>
+                        <option <%= product.skinType === 'Sensitive' ? 'selected' : null %> value="Sensitive">Sensitive</option>
+                        <option <%= product.skinType === 'Combinated' ? 'selected' : null %> value="Combinated">Combinated</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="color">Color:</label>
+                    <input type="text" class="form-control" value="<%= product.color %>" id="color" name="product[color]" placeholder="Pick a color" required>
+                    <div class="invalid-feedback">Color is required</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="image">Item picture:</label>
+                    <input type="text" class="form-control" value="<%= product.imageUrl %>" id="image" name="product[imageUrl]" placeholder="Provide a URL" required>
+                    <div class="invalid-feedback">Picture is required</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="finishType">Finish type:</label>
+                    <input type="text" class="form-control" id="finishType" value="<%= product.finishType %>" name="product[finishType]" placeholder="Describe a finish type" required>
+                    <div class="invalid-feedback">Finish type is required</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="volume">Item volume or weight:</label>
+                    <input type="text" class="form-control" value="<%= product.volume %>" id="volume" name="product[volume]" placeholder="Milliliters or grams" required>
+                    <div class="invalid-feedback">Volume is required</div>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="commercial">Commercial:</label>
+                    <input class="form-control" value="<%= product.commercial %>" id="commercial" name="product[commercial]" placeholder="Commercial for this product" required>
+                    <div class="invalid-feedback">Commercial is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" id="description" name="product[description]" rows="2" placeholder="What <%= product.brand.name %> tells about this product?"><%= product.description %></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="label-required" for="ingredients">Ingredients:</label>
+                    <textarea class="form-control" id="ingredients" name="product[ingredients]" rows="5" required><%= product.ingredients %></textarea>
+                    <small id="emailHelp" class="form-text text-muted">Separate ingredients with a comma (,)</small>
+                    <div class="invalid-feedback">Ingredients were not provided</div>
+                </div>
+                <button class="btn btn-sm btn-success">Save updates</button>
+            </form>
+            <form class="mt-2" action="/brands/<%= product.brand.short %>/<%= product._id %>?_method=DELETE" method="post">
+                <button class="btn btn-sm btn-secondary">Delete the product</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -51,6 +51,11 @@
                 <div class="invalid-feedback">Volume is required</div>
             </div>
             <div class="form-group">
+                <label class="label-required" for="commercial">Commercial:</label>
+                <input class="form-control" id="commercial" name="product[commercial]" placeholder="Commercial for this product" required>
+                <div class="invalid-feedback">Commercial is required</div>
+            </div>
+            <div class="form-group">
                 <label for="description">Description:</label>
                 <textarea class="form-control" id="description" name="product[description]" rows="2" placeholder="What <%= brand.name %> tells about this product?"></textarea>
             </div>

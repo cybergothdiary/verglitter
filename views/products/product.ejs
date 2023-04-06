@@ -1,0 +1,53 @@
+<%- layout('./layout/boilerplate') %>
+
+<header>
+    <%- include('../partials/navbar') %>
+</header>
+<div class="brands-section container py-5">
+    <a href="/brands/<%= product.brand.short %>" class="product-back d-block text-center mb-5">&#8593; Back to <%= product.brand.name %></a>
+    <div class="product-card d-flex justify-content-between">
+        <div class="product-card-img">
+            <img class="product-card-img" src="<%= product.imageUrl %>">
+        </div>
+        <div class="product-card-description">
+            <div class="product-heading-block">
+                <h3><%= product.name %>, <%= product.volume %></h3>
+                <a href="/brands/<%= product.brand.short %>/<%= product._id %>/edit" class="btn btn-sm btn-secondary mb-2">Edit the product</a>
+                <h6>&bigstar;&bigstar;&bigstar;&bigstar;&star;</h6>
+            </div>
+            <hr>
+            <div class="product-data-block">
+                <p><span>Item Type:</span> <%= product.itemType %></p>
+                <p><span>Skin Type:</span> <%= product.skinType %></p>
+                <p><span>Color:</span> <%= product.color %></p>
+                <p><span>Finish Type:</span> <%= product.finishType %></p>
+                <p><span>Volume:</span> <%= product.volume %></p>
+                <div class="product-description-block mt-5">
+                    <h6><%= product.brand.name %> about this item:</h6>
+                    <p><i>- <%= product.commercial %></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h5>More information</h5>
+    <div class="dropdown-block mt-3">
+        <div class="dropdown-heading">
+            <span class="dropdown-title">Description of the product</span>
+            <span class="dropdown-btn">+</span>
+        </div>
+        <div class="dropdown-content">
+            <p class="mt-3">
+                <%= product.description ? product.description : 'Sorry, no detail description by ' + product.brand.name + ' yet...' %>
+            </p>
+        </div>
+    </div>
+    <div class="dropdown-block mt-3">
+        <div class="dropdown-heading">
+            <span class="dropdown-title">Ingredients</span>
+            <span class="dropdown-btn">+</span>
+        </div>
+        <div class="dropdown-content">
+            <p class="mt-3"><%= product.ingredients %></p>
+        </div>
+    </div>
+</div>

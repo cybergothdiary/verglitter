@@ -16,16 +16,17 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
     name: String, // required
-    itemType: { //required
-        enum: ['Eyeliner', 'Pomade', 'Cream']
+    itemType: { 
+        type: String, enum: ['Eyeliner', 'Pomade', 'Cream']
     },
-    skinType: { // required
-        enum: ['All', 'Normal', 'Sensitive', 'Combinated']
+    skinType: {
+        type: String, enum: ['All', 'Normal', 'Sensitive', 'Combinated']
     },
     color: String, // required
     imageUrl: String, // required
     finishType: String, // required
     volume: String, // required
+    commercial: String, // required
     description: String, // optional
     ingredients: String,
 

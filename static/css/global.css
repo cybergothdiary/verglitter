@@ -60,7 +60,7 @@ nav li {
     transition: opacity .15s;
 }
 
-/* brand.ejs */
+/* *** brand.ejs *** */
 
 .brand-card {
     /* border: 1px solid black; */
@@ -68,6 +68,7 @@ nav li {
     margin: 0 auto;
     /* box-shadow: 0 0 10px 0 rgba(0,0,0,.08); */
     border-radius: 20px;
+
 }
 .brand-card-img {
     flex-basis: 25%;
@@ -87,9 +88,6 @@ nav li {
     opacity: .9;
     font-size: .9rem;
 }
-
-/* product / add.ejs */
-
 .btn-add {
     background-color: rgba(255,20,147,.7);
     /* color: #fcf7f7; */
@@ -98,4 +96,91 @@ nav li {
 }
 .btn-add:hover {
     background-color: rgba(254, 90, 178, .4);
+}
+.product-card img {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* *** product.ejs *** */
+.product-card {
+    border-radius: 20px;
+    padding: 0;
+}
+.product-card .card-body {
+    padding-bottom: 10px;
+}
+.product-card p {
+    margin-bottom: .5em;
+}
+.product-card-img {
+    flex-basis: 30%;
+}
+.product-card-img img {
+    width: 100%;
+}
+.product-card-description {
+    flex-basis: 55%;
+}
+.product-card-description p {
+    margin-bottom: .4em;
+}
+.product-card-description p span {
+    font-weight: 600;
+}
+.ingredients-table {
+    display: block;
+}
+.ingredients-table tr {
+    border: 1px solid black;
+    display: block;
+    padding: .2em .7em;
+}
+.dropdown-block {
+    max-width: 800px;
+    border-radius: 5px;
+    background-color: rgba(209, 209, 209, .15);
+    /* padding: .3em .8em; */
+}
+.dropdown-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .3em .8em;
+    transition: background-color .15s;
+}
+.dropdown-heading:hover {
+    cursor: pointer;
+    background-color: rgba(209, 209, 209, .3);
+}
+.dropdown-heading_active {
+    background-color: rgba(209, 209, 209, .15);
+}
+.dropdown-btn {
+    font-size: 1.4rem;
+    font-weight: 600;
+    transition: transform .35s;
+}
+.dropdown-btn_active {
+    transform: rotate(45deg);
+}
+.dropdown-content {
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .25s ease-in-out, padding .2s;
+    padding: 0 .8em;
+}
+.dropdown-content_opened {
+    max-height: 150px;
+    padding: .2em .8em;
+}
+.stretched-link {
+    margin: 0;
+}
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: auto;
+    content: "";
 }

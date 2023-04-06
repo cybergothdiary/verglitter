@@ -1,9 +1,5 @@
-// H A B I B A T I | 
+// H A B I B A T I
 // Multifunctional & exclusive platform, disposing info as well as reviews of the most iconic and worshipped cosmetics.
-
-// https://99designs.com/profiles/1875373/designs/1513751
-
-// Product Model <-> Review Model
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -55,7 +51,7 @@ app.get(['/', '/brands'], async (req, res) => {
 });
 
 app.get('/brands/:shortName', async (req, res) => {
-    const isPresented = await Brand.findOne({short: req.params.shortName});
+    const isPresented = await Brand.findOne({short: req.params.shortName}).populate('products');
     if (isPresented) {
         res.render('brand', {brand: isPresented, pageTitle: isPresented.name});
     } else {
@@ -66,7 +62,7 @@ app.get('/brands/:shortName', async (req, res) => {
 app.get('/brands/:shortName/add', async (req, res) => {
     const isPresented = await Brand.findOne({short: req.params.shortName});
     if (isPresented) {
-        res.render('products/add', {brand: isPresented});
+        res.render('products/add', {brand: isPresented, pageTitle: 'New product'});
     } else {
         res.redirect('/');
     }
@@ -79,12 +75,31 @@ app.post('/brands/:shortName', catchAsync(async (req, res) => {
     product.brand = brand;
     await brand.save();
     await product.save();
-    res.redirect('/'); // Should redirect to just created product page
+    res.redirect(`/brands/${req.params.shortName}/${product._id}`); // Should redirect to just created product page
 }));
 
 app.get('/brands/:shortName/:productId', async (req, res) => {
-    res.send(`${req.params.shortName} has some products for you!`);
+    const product = await Product.findById(req.params.productId).populate('brand');
+    res.render('products/product', {product, pageTitle: product.name});
 });
+
+app.put('/brands/:shortName/:productId', async (req, res) => {
+    const { shortName, productId } = req.params;
+    await Product.findByIdAndUpdate(productId, req.body.product);
+    res.redirect(`/brands/${shortName}/${productId}`);
+})
+
+app.delete('/brands/:shortName/:productId', async (req, res) => {
+    const { shortName, productId } = req.params;
+    await Product.findByIdAndDelete(productId);
+    await Brand.findOneAndUpdate({short: shortName}, {$pull: {products: productId}});
+    res.redirect(`/brands/${req.params.shortName}`);
+});
+
+app.get('/brands/:shortName/:productId/edit', async (req, res) => {
+    const product = await Product.findById(req.params.productId).populate('brand');
+    res.render('products/edit', {product, pageTitle: product.name});
+})
 
 app.all('*', (req, res, next) => {
     res.send('Sorry, 404: Not Found!')

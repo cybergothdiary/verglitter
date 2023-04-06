@@ -17,6 +17,16 @@
     </div>
     <h5 class="text-center mt-5">The catalog of <%= brand.name %> is presented below:</h5>
     <div class="d-flex justify-content-between flex-wrap mt-3">
-        
+        <% for (let product of brand.products) { %>
+            <div class="card product-card col-3">
+                <img class="card-img-top my-3" src="<%= product.imageUrl %>" alt="<% product.name %>">
+                <div class="card-body">
+                    <h5 class="card-title"><%= product.name %></h5>
+                    <p class="card-text"><%= product.itemType %>, <%= product.volume %></p>
+                    <p>&bigstar;&bigstar;&bigstar;&bigstar;&star;</p>
+                </div>
+                <a href="/brands/<%= brand.short %>/<%= product._id %>" class="stretched-link"></a>
+            </div>
+        <% } %>
     </div>
 </div>
