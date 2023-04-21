@@ -4,6 +4,16 @@ ul { list-style-type: none; }
 a { text-decoration: none; color: #000; }
 a:hover { color: unset; text-decoration: none; }
 
+/* error.ejs */
+.error-display {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.error-img {
+    max-width: 400px;
+    margin-top: 50px;
+}
+
 /* Navbar */
 nav {
     background-color: rgba(248, 227, 227, .3);
@@ -68,7 +78,6 @@ nav li {
     margin: 0 auto;
     /* box-shadow: 0 0 10px 0 rgba(0,0,0,.08); */
     border-radius: 20px;
-
 }
 .brand-card-img {
     flex-basis: 25%;
@@ -77,6 +86,12 @@ nav li {
     /* height: 350px; */
     width: 100%;
     border-radius: 20px;
+}
+.product-catalog-img {
+    /* width: 100%; */
+    max-height: 170px;
+
+    object-fit: contain;
 }
 .brand-card-description {
     margin-right: 10px;
@@ -101,11 +116,15 @@ nav li {
     width: 50%;
     margin: 0 auto;
 }
+.apology-text {
+    font-size: .85rem;
+}
 
 /* *** product.ejs *** */
 .product-card {
     border-radius: 20px;
     padding: 0;
+    /* flex-basis: 100%; */
 }
 .product-card .card-body {
     padding-bottom: 10px;

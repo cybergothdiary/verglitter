@@ -1,12 +1,13 @@
-const Joi = require('Joi');
+const Joi = require('joi');
+const AppError = require('./appError');
 const { productSchema } = require('./joiSchemas');
 
 const validateProduct = (req, res, next) => {
     const {error} = productSchema.validate(req.body);
     if (error) {
-        console.log('An error during validation!', error)
+        throw new AppError(400, `${error.message}`, 'Validation Failed');
     } else {
-        console.log('Successfully!', req.body);
+        next();
     }
 }
 

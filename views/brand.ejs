@@ -6,7 +6,7 @@
 <div class="brands-section container py-5">
     <div class="brand-card d-flex justify-content-between align-items-center">
         <div class="brand-card-img">
-            <img class="brand-card-img" src="/assets/maybelline/maybelline-card.jpeg">
+            <img class="brand-card-img" src="<%= brand.bannerUrl %>">
         </div>
         <div class="brand-card-description">
             <h5><%= brand.name %></h5>
@@ -16,17 +16,21 @@
         </div>
     </div>
     <h5 class="text-center mt-5">The catalog of <%= brand.name %> is presented below:</h5>
-    <div class="d-flex justify-content-between flex-wrap mt-3">
-        <% for (let product of brand.products) { %>
-            <div class="card product-card col-3">
-                <img class="card-img-top my-3" src="<%= product.imageUrl %>" alt="<% product.name %>">
-                <div class="card-body">
-                    <h5 class="card-title"><%= product.name %></h5>
-                    <p class="card-text"><%= product.itemType %>, <%= product.volume %></p>
-                    <p>&bigstar;&bigstar;&bigstar;&bigstar;&star;</p>
+    <div class="d-flex justify-content-around flex-wrap mt-3 align-items-top">
+        <% if (brand.products.length) { %>
+            <% for (let product of brand.products) { %>
+                <div class="card product-card col-3 mx-3 mb-4">
+                    <img class="product-catalog-img card-img-top my-3" src="<%= product.imageUrl %>" alt="<% product.name %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= product.name %></h5>
+                        <p class="card-text"><%= product.itemType %>, <%= product.volume %></p>
+                        <p>&bigstar;&bigstar;&bigstar;&bigstar;&star;</p>
+                    </div>
+                    <a href="/brands/<%= brand.short %>/<%= product._id %>" class="stretched-link"></a>
                 </div>
-                <a href="/brands/<%= brand.short %>/<%= product._id %>" class="stretched-link"></a>
-            </div>
+            <% } %>
+        <% } else { %>
+            <p class="apology-text mt-1">We apologize, there is no available products at the moment.</p>
         <% } %>
     </div>
 </div>

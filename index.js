@@ -13,6 +13,7 @@ const { productSchema } = require('./utils/joiSchemas');
 const { validateProduct } = require('./utils/validators');
 
 // $$$ Error Classes & Catch
+const AppError = require('./utils/appError');
 const catchAsync = require('./utils/catchAsync');
 
 // $$$ Express App Initialization
@@ -43,32 +44,32 @@ app.use((req, res, next) => {
     next();
 })
 
-// ***** Routing 
+// ***** Routing *****
 
-app.get(['/', '/brands'], async (req, res) => {
+app.get(['/', '/brands'], catchAsync(async (req, res) => {
     const brands = await Brand.find({});
     res.render('index', {brands});
-});
+}));
 
-app.get('/brands/:shortName', async (req, res) => {
+app.get('/brands/:shortName', catchAsync(async (req, res) => {
     const isPresented = await Brand.findOne({short: req.params.shortName}).populate('products');
     if (isPresented) {
         res.render('brand', {brand: isPresented, pageTitle: isPresented.name});
     } else {
         res.redirect('/');
     }
-});
+}));
 
-app.get('/brands/:shortName/add', async (req, res) => {
+app.get('/brands/:shortName/add', catchAsync(async (req, res) => {
     const isPresented = await Brand.findOne({short: req.params.shortName});
     if (isPresented) {
         res.render('products/add', {brand: isPresented, pageTitle: 'New product'});
     } else {
         res.redirect('/');
     }
-});
+}));
 
-app.post('/brands/:shortName', catchAsync(async (req, res) => {
+app.post('/brands/:shortName', validateProduct, catchAsync(async (req, res) => {
     const product = new Product(req.body.product);
     const brand = await Brand.findOne({short: req.params.shortName});
     brand.products.push(product);
@@ -78,31 +79,37 @@ app.post('/brands/:shortName', catchAsync(async (req, res) => {
     res.redirect(`/brands/${req.params.shortName}/${product._id}`); // Should redirect to just created product page
 }));
 
-app.get('/brands/:shortName/:productId', async (req, res) => {
+app.get('/brands/:shortName/:productId', catchAsync(async (req, res) => {
     const product = await Product.findById(req.params.productId).populate('brand');
     res.render('products/product', {product, pageTitle: product.name});
-});
+}));
 
-app.put('/brands/:shortName/:productId', async (req, res) => {
+app.put('/brands/:shortName/:productId', validateProduct, catchAsync(async (req, res) => {
     const { shortName, productId } = req.params;
     await Product.findByIdAndUpdate(productId, req.body.product);
     res.redirect(`/brands/${shortName}/${productId}`);
-})
+}));
 
-app.delete('/brands/:shortName/:productId', async (req, res) => {
+app.delete('/brands/:shortName/:productId', catchAsync(async (req, res) => {
     const { shortName, productId } = req.params;
     await Product.findByIdAndDelete(productId);
     await Brand.findOneAndUpdate({short: shortName}, {$pull: {products: productId}});
     res.redirect(`/brands/${req.params.shortName}`);
-});
+}));
 
-app.get('/brands/:shortName/:productId/edit', async (req, res) => {
+app.get('/brands/:shortName/:productId/edit', catchAsync(async (req, res) => {
     const product = await Product.findById(req.params.productId).populate('brand');
     res.render('products/edit', {product, pageTitle: product.name});
-})
+}));
 
 app.all('*', (req, res, next) => {
-    res.send('Sorry, 404: Not Found!')
+    throw new AppError(404, 'Not Found')
+})
+
+app.use((err, req, res, next) => {
+    if(!err.status) err.status = 500;
+    if(!err.message) err.message = 'Something Went Wrong.'
+    res.status(err.status).render('error', {status: err.status, name: err.name, message: err.message, pageTitle: `${err.status}: ${err.name}`});
 })
 
 app.use((err, req, res, next) => {

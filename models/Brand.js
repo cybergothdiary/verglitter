@@ -8,6 +8,7 @@ const brandSchema = new Schema({
     short: String,
     name: String,
     imageUrl: String,
+    bannerUrl: String,
     foundedIn: Number,
     country: String,
     history: String,

@@ -1,0 +1,17 @@
+<%- layout('./layout/boilerplate') %>
+
+<header>
+    <%- include('./partials/navbar') %>
+</header>
+<div class="error-display text-center">
+    <% if (status === 404) { %>
+        <img class="error-img" src="https://www.maybelline.com/~/media/mny/global/error-pages/error-404.gif" alt="Error 404: Not Found">
+        <h4 class="text-center mt-5">Page Not Found.</h4>
+        <p class="error-message">We apologize for the inconvenience</p>
+    <% } else { %>
+        <img class="error-img" src="/assets/err.gif" alt="O-o-pss...">
+        <h4 class="text-center mt-5"><%= status %>: <%= name %></h4>
+        <p class="error-message"><%= message %> </p>
+    <% } %>
+    <a class="btn btn-sm btn-secondary" href="/">Go Home</a>
+</div>
