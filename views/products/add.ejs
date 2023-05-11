@@ -3,10 +3,10 @@
 <header>
     <%- include('../partials/navbar') %>
 </header>
-<div class="add-section py-3">
+<div class="add-section py-4">
     <div class="container">
         <a href="/brands/<%= brand.short %>" class="product-back d-block text-center">&#8593; Back to <%= brand.name %></a>
-        <form class="col-6 mx-auto bs-validation" action="/brands/<%= brand.short %>" method="post" novalidate>
+        <form class="col-md-8 col-lg-6 mx-auto bs-validation" action="/brands/<%= brand.short %>" method="post" novalidate>
             <div class="form-group">
                 <label class="label-required" for="name">Name:</label>
                 <input type="text" class="form-control" id="name" name="product[name]" placeholder="Enter a name of your product" required>

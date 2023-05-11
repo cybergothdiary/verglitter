@@ -8,6 +8,7 @@ const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
     rating: Number,
+    headline: String,
     content: String,
 
     product: {

@@ -1,5 +1,5 @@
-// H A B I B A T I
-// Multifunctional & exclusive platform, disposing info as well as reviews of the most iconic and worshipped cosmetics.
+// Ver Glitter
+// Multifunctional & modern platform disposing structured data as well as reviews for worldwide cosmetics brand.
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -20,7 +20,7 @@ const catchAsync = require('./utils/catchAsync');
 const app = express();
 
 // $$$ MongoDB Connecting
-mongoose.connect('mongodb://127.0.0.1:27017/habibati')
+mongoose.connect('mongodb://127.0.0.1:27017/verglitter')
 .then(() => console.log('MongoDB: Successfull connection completed'))
 .catch((err) => console.log('MongoDB: Error occured', err));
 
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use((req, res, next) => {
-    res.locals.pageTitle = 'H A B I B A T I';
+    res.locals.pageTitle = 'Ver Glitter';
     next();
 })
 
@@ -117,5 +117,5 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(3000, () => {
-    console.log('HABIBATI APP: Server is running on // localhost //')
+    console.log('VerGlitter: Server is running on // localhost //')
 });

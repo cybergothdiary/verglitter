@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Brand = require('./models/Brand');
 const Product = require('./models/Product');
 
-mongoose.connect('mongodb://127.0.0.1:27017/habibati')
+mongoose.connect('mongodb://127.0.0.1:27017/verglitter')
 .then(() => console.log('MongoDB: Successfull connection completed'))
 .catch((err) => console.log('MongoDB: Error occured', err));
 
@@ -56,7 +56,7 @@ const fillDatabase = async () => {
             short: 'armani',
             name: 'Armani Beauty',
             imageUrl: 'https://i.imgur.com/ZAFvPOw.jpg',
-            bannerUrl: 'https://i.imgur.com/1Kbnlyl.jpg',
+            bannerUrl: 'https://i.imgur.com/nhJZJGo.jpg',
             foundedIn: 1975,
             country: 'Italy',
             history: 'Armani and his partner, architect Sergio Galeotti, founded Giorgio Armani SpA in 1975, reportedly on money from the sale of Armani\'s Volkswagen. The company signed a license with Gruppo Finanziario Tessile in 1978. It partnered with L\'Oreal on a licensing agreement for the production and distribution of fragrances, cosmetics and beauty products in 1980 and with Luxottica for eyewear in 1988. By 1993, the Armani name was represented by 23 licensees and two large joint ventures in Japan.'

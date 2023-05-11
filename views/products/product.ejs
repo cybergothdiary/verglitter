@@ -3,7 +3,7 @@
 <header>
     <%- include('../partials/navbar') %>
 </header>
-<div class="brands-section container py-5">
+<div class="brands-section container py-4">
     <a href="/brands/<%= product.brand.short %>" class="product-back d-block text-center mb-5">&#8593; Back to <%= product.brand.name %></a>
     <div class="product-card d-flex justify-content-between">
         <div class="product-card-img">
@@ -13,7 +13,7 @@
             <div class="product-heading-block">
                 <h3><%= product.name %>, <%= product.volume %></h3>
                 <a href="/brands/<%= product.brand.short %>/<%= product._id %>/edit" class="btn btn-sm btn-secondary mb-2">Edit the product</a>
-                <h6>&bigstar;&bigstar;&bigstar;&bigstar;&star;</h6>
+                <!-- <h6>&bigstar;&bigstar;&bigstar;&bigstar;&star;</h6> -->
             </div>
             <hr>
             <div class="product-data-block">
@@ -29,25 +29,70 @@
             </div>
         </div>
     </div>
-    <h5>More information</h5>
-    <div class="dropdown-block mt-3">
-        <div class="dropdown-heading">
-            <span class="dropdown-title">Description of the product</span>
-            <span class="dropdown-btn">+</span>
+    <div class="informative-section">
+        <h5>More information</h5>
+        <div class="dropdown-block mt-3">
+            <div class="dropdown-heading">
+                <span class="dropdown-title">Description of the product</span>
+                <span class="dropdown-btn">+</span>
+            </div>
+            <div class="dropdown-content">
+                <p class="mt-3">
+                    <%= product.description ? product.description : 'Sorry, no detail description by ' + product.brand.name + ' yet...' %>
+                </p>
+            </div>
         </div>
-        <div class="dropdown-content">
-            <p class="mt-3">
-                <%= product.description ? product.description : 'Sorry, no detail description by ' + product.brand.name + ' yet...' %>
-            </p>
+        <div class="dropdown-block mt-3">
+            <div class="dropdown-heading">
+                <span class="dropdown-title">Ingredients</span>
+                <span class="dropdown-btn">+</span>
+            </div>
+            <div class="dropdown-content">
+                <p class="mt-3"><%= product.ingredients %></p>
+            </div>
         </div>
     </div>
-    <div class="dropdown-block mt-3">
-        <div class="dropdown-heading">
-            <span class="dropdown-title">Ingredients</span>
-            <span class="dropdown-btn">+</span>
-        </div>
-        <div class="dropdown-content">
-            <p class="mt-3"><%= product.ingredients %></p>
+    <hr class="my-3">
+    <div class="reviews-section">
+        <h5>Customer reviews for this product</h5>
+        <div class="row mt-4">
+            <div class="col-3">
+                <div class="total-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div>
+                <p class="total-based">Based on 0 reviews</p>
+                <a class="btn btn-sm btn-success" href="/brands/<%= product.brand.short %>/<%= product._id %>/review">Write a review</a>
+            </div>
+            <div class="col-9">
+                <div class="review-block mb-4">
+                    <div class="review-author row align-items-center mb-3">
+                        <div class="col-1">
+                            <img class="author-picture" src="https://i.pinimg.com/736x/71/f3/51/71f3519243d136361d81df71724c60a0--avatar-icons.jpg" alt="Author picture">
+                        </div>
+                        <div class="col-10 pl-1">
+                            <span class="author-username">Unknown author</span>
+                        </div>
+                    </div>
+                    <div class="review-heading">Excellent!</div>
+                    <div class="review-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div>
+                    <p class="review-content mt-3">
+                        I literally was trying to find something for my sensetive skin for years... and when I first time used this miracle product, oh my god, it was incredible. I was so shoked that there actually is such personal cosmetic product for me! I would recommend it to literally everyone. Don't waste your time!
+                    </p>
+                </div>
+                <div class="review-block">
+                    <div class="review-author row align-items-center mb-3">
+                        <div class="col-1">
+                            <img class="author-picture" src="https://i.pinimg.com/736x/71/f3/51/71f3519243d136361d81df71724c60a0--avatar-icons.jpg" alt="Author picture">
+                        </div>
+                        <div class="col-10 pl-1">
+                            <span class="author-username">Unknown author</span>
+                        </div>
+                    </div>
+                    <div class="review-heading">Worth it for whole 200%!</div>
+                    <div class="review-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div>
+                    <p class="review-content mt-3">
+                        Amazing company and quality. It has been 5 years since I buying Clinique stuff. There is nothing I can be upset about :)
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
