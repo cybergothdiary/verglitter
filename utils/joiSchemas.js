@@ -15,4 +15,12 @@ const productSchema = new Joi.object({
     })
 });
 
-module.exports = { productSchema };
+const reviewSchema = new Joi.object({
+    review: Joi.object({
+        rating: Joi.number().integer().min(1).max(5).required(),
+        headline: Joi.string().max(50).required(),
+        content: Joi.string().required()
+    })
+});
+
+module.exports = { productSchema, reviewSchema };

@@ -57,41 +57,46 @@
         <h5>Customer reviews for this product</h5>
         <div class="row mt-4">
             <div class="col-3">
-                <div class="total-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div>
-                <p class="total-based">Based on 0 reviews</p>
-                <a class="btn btn-sm btn-success" href="/brands/<%= product.brand.short %>/<%= product._id %>/review">Write a review</a>
+                <!-- <div class="total-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div> -->
+                <div class="total-rating">
+                    <% let total = 0 %>
+                    <% for (let review of product.reviews) { %>
+                        <% total = 7 %>
+                    <% } %>
+                    <% totalFloor = Math.floor(total / product.reviews.length) %>
+                    <% if(totalFloor > 5 ) { %>
+                        <%- '&bigstar;'.repeat(5) %>
+                    <% } else if(totalFloor >= 1 && totalFloor <= 5) { %>
+                        <%- '&bigstar;'.repeat(totalFloor) %>
+                    <% } else { %>
+                        <%- 'None' %>
+                    <% } %>
+                </div>
+                <% if (product.reviews.length) { %>
+                    <p class="total-based">Based on <%= product.reviews.length %> reviews</p>
+                <% } else { %>
+                    <p class="total-based">It still has no reviews...</p>
+                <% } %>
+                <a class="btn btn-sm btn-success" href="/brands/<%= product.brand.short %>/<%= product._id %>/addreview">Write a review</a>
             </div>
             <div class="col-9">
-                <div class="review-block mb-4">
-                    <div class="review-author row align-items-center mb-3">
-                        <div class="col-1">
-                            <img class="author-picture" src="https://i.pinimg.com/736x/71/f3/51/71f3519243d136361d81df71724c60a0--avatar-icons.jpg" alt="Author picture">
+                <% for (let review of product.reviews) { %>
+                    <div class="review-block mb-4">
+                        <div class="review-author row align-items-center mb-3">
+                            <div class="col-1">
+                                <img class="author-picture" src="https://i.pinimg.com/736x/71/f3/51/71f3519243d136361d81df71724c60a0--avatar-icons.jpg" alt="Author picture">
+                            </div>
+                            <div class="col-10 pl-1">
+                                <span class="author-username">Unknown author</span>
+                            </div>
                         </div>
-                        <div class="col-10 pl-1">
-                            <span class="author-username">Unknown author</span>
-                        </div>
+                        <div class="review-heading"><%= review.headline %></div>
+                        <!-- <div class="review-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div> -->
+                        <div class="review-rating"><%- '&bigstar;'.repeat(review.rating) %></div>
+                        <p class="review-content mt-3"><%= review.content %></p>
                     </div>
-                    <div class="review-heading">Excellent!</div>
-                    <div class="review-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div>
-                    <p class="review-content mt-3">
-                        I literally was trying to find something for my sensetive skin for years... and when I first time used this miracle product, oh my god, it was incredible. I was so shoked that there actually is such personal cosmetic product for me! I would recommend it to literally everyone. Don't waste your time!
-                    </p>
-                </div>
-                <div class="review-block">
-                    <div class="review-author row align-items-center mb-3">
-                        <div class="col-1">
-                            <img class="author-picture" src="https://i.pinimg.com/736x/71/f3/51/71f3519243d136361d81df71724c60a0--avatar-icons.jpg" alt="Author picture">
-                        </div>
-                        <div class="col-10 pl-1">
-                            <span class="author-username">Unknown author</span>
-                        </div>
-                    </div>
-                    <div class="review-heading">Worth it for whole 200%!</div>
-                    <div class="review-rating">&bigstar;&bigstar;&bigstar;&bigstar;&bigstar;</div>
-                    <p class="review-content mt-3">
-                        Amazing company and quality. It has been 5 years since I buying Clinique stuff. There is nothing I can be upset about :)
-                    </p>
-                </div>
+                <% } %>
+                
             </div>
         </div>
     </div>

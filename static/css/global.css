@@ -215,9 +215,6 @@ nav li {
     pointer-events: auto;
     content: "";
 }
-.reviews-form {
-    box-shadow: 0 0 5px rgba(0,0,0,.1);
-}
 .total-rating {
     font-size: 1.8rem;
 }
@@ -242,6 +239,33 @@ nav li {
 }
 .review-rating {
     font-size: 1rem;
+}
+
+/* *** addreview.ejs *** */
+.rating-widget {
+    /* display: flex; */
+}
+.rating-widget input {
+    position: absolute;
+    left: -100vw;
+}
+.rating-widget label {
+    width: 48px;
+    height: 48px;
+    padding: 48px 0 0;
+    overflow: hidden;
+    background: url('../assets/rating-star.svg') no-repeat top left;
+}
+.rating-widget:not(:hover) input:indeterminate + label,
+.rating-widget:not(:hover) input:checked ~ input + label,
+.rating-widget input:hover ~ input + label {
+    background-position: -48px 0;
+}
+.rating-widget label:hover {
+    cursor: pointer;
+}
+.rating:not(:hover) input:focus-visible + label {
+    background-position: -96px 0;
 }
 
 /* @@@ MEDIA QUERIES @@@ */

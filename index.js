@@ -9,8 +9,7 @@ const path = require('path');
 
 // $$$ Joi Validation
 const Joi = require('joi');
-const { productSchema } = require('./utils/joiSchemas');
-const { validateProduct } = require('./utils/validators');
+const { validateProduct, validateReview } = require('./utils/validators');
 
 // $$$ Error Classes & Catch
 const AppError = require('./utils/appError');
@@ -80,7 +79,7 @@ app.post('/brands/:shortName', validateProduct, catchAsync(async (req, res) => {
 }));
 
 app.get('/brands/:shortName/:productId', catchAsync(async (req, res) => {
-    const product = await Product.findById(req.params.productId).populate('brand');
+    const product = await Product.findById(req.params.productId).populate('brand').populate('reviews');
     res.render('products/product', {product, pageTitle: product.name});
 }));
 
@@ -101,6 +100,25 @@ app.get('/brands/:shortName/:productId/edit', catchAsync(async (req, res) => {
     const product = await Product.findById(req.params.productId).populate('brand');
     res.render('products/edit', {product, pageTitle: product.name});
 }));
+
+app.get('/brands/:shortName/:productId/addreview', catchAsync(async (req, res) => {
+    const product = await Product.findById(req.params.productId).populate('brand');
+    res.render('products/addreview', {pageTitle: 'Write a new review', product});
+}));
+
+// Review adding
+app.post('/brands/:shortName/:productId', validateReview, catchAsync(async (req, res) => {
+    console.log(req.body);
+    const {shortName, productId} = req.params;
+
+    const review = new Review(req.body.review);
+    const product = await Product.findById(productId).populate('reviews');
+    product.reviews.push(review);
+    review.product = product;
+    await review.save();
+    await product.save();
+    res.redirect(`/brands/${shortName}/${productId}`);
+}))
 
 app.all('*', (req, res, next) => {
     throw new AppError(404, 'Not Found')
